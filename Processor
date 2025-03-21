@@ -1,0 +1,118 @@
+package nguyenngoctu_1322_213;
+
+import java.util.*;
+
+public class Processor {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        VehicleList vehicleList = new VehicleList();
+        int choice;
+        do {
+            System.out.println("---------------------------");
+            System.out.println("MENU");
+            System.out.println("0.Exit");
+            System.out.println("1.Add car");
+            System.out.println("2.Add truck");
+            System.out.println("3,Update by id");
+            System.out.println("4.Delete by id");
+            System.out.println("Find vehicle by id");
+            System.out.println("6.Find Car by number of seats");
+            System.out.println("7.Find electric cars");
+            System.out.println("8.Find truck wwith longest distance");
+            System.out.println("9.Display all");
+            System.out.println("option:");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("nhap id");
+                    String id = scanner.nextLine();
+                    System.out.println("Nhap brand:");
+                    String brand = scanner.nextLine();
+                    System.out.println("Enter model:");
+                    String model = scanner.nextLine();
+                    System.out.println("enter retailDays:");
+                    int retailDays = scanner.nextInt();
+                    System.out.println("enter price:");
+                    double retailPricePerDay = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Enter number of Seats:");
+                    int numberOfSeats = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Enter type fuel(electric,oid)");
+                    String fuelType = scanner.nextLine();
+                    Car car = new Car(id, brand, model, retailDays, retailPricePerDay, numberOfSeats, fuelType);
+                    vehicleList.addVehilce(car);
+                    break;
+                case 2:
+                    System.out.println("nhap id");
+                    id = scanner.nextLine();
+                    System.out.println("Nhap brand:");
+                    brand = scanner.nextLine();
+                    System.out.println("Enter model:");
+                    model = scanner.nextLine();
+                    System.out.println("enter retailDays:");
+                    retailDays = scanner.nextInt();
+                    System.out.println("enter price:");
+                    retailPricePerDay = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Enter distance :");
+                    double distance = scanner.nextDouble();
+                    System.out.println("load capacity:");
+                    double loadCapacity = scanner.nextDouble();
+                    Truck truck = new Truck(id, brand, model, retailDays, retailPricePerDay, loadCapacity, distance);
+                    vehicleList.addVehilce(truck);
+                    break;
+                case 3:
+                    System.out.println("Nhap id muon edit");
+                    String idToEdit = scanner.nextLine();
+                    vehicleList.updateVehicleByString(idToEdit);
+                    break;
+                case 4:
+                    System.out.println("Nhap id xoa:");
+                    String idDelete = scanner.nextLine();
+                    vehicleList.deleteVehicle(idDelete);
+                    break;
+                case 5:
+                    System.out.println("Enter id muon tim:");
+                    String idToFind = scanner.nextLine();
+                    Vehicle timId = vehicleList.findVehicleById(idToFind);
+                    if (timId != null) {
+                        timId.displayDetails();
+                    } else {
+                        System.out.println("Khong thay id :" + idToFind);
+                    }
+                    break;
+                case 6:
+                    System.out.println("Nhap so ghe:");
+                    int seats = scanner.nextInt();
+                    ArrayList<Car> carSeat = vehicleList.findCarsBySeat(seats);
+                    if (carSeat.isEmpty()) {
+                        System.out.println("Danh sach rong");
+                    } else {
+                        carSeat.forEach(Car::displayDetails);
+                    }
+                    break;
+                case 7:
+                    ArrayList<Car> carElectric = vehicleList.findElectricCar();
+                    if (carElectric.isEmpty()) {
+                        System.out.println("Rong");
+                    } else {
+                        carElectric.forEach(Car::displayDetails);
+                    }
+                    break;
+                case 8:
+                    Truck timKiem = vehicleList.findTruckLongestDistacnce();
+                    if (timKiem != null) {
+                        timKiem.displayDetails();
+                    } else {
+                        System.out.println("Khong co");
+                    }
+                    break;
+                case 9:
+                    vehicleList.displayAll();
+                    break;
+            }
+        } while (choice != 0);
+    }
+}
