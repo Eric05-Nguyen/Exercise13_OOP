@@ -1,0 +1,116 @@
+package nguyenngoctu_1322_213;
+
+import java.util.*;
+
+public class VehicleList {
+
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
+    Scanner scanner = new Scanner(System.in);
+
+    public void addVehilce(Vehicle vehicle) {
+        vehicles.add(vehicle);
+    }
+
+    public boolean updateVehicleByString(String id) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getId().equals(id)) {
+                System.out.println("Nhap brand:");
+                String brand = scanner.nextLine();
+                System.out.println("Enter model:");
+                String model = scanner.nextLine();
+                System.out.println("enter retailDays:");
+                int retailDays = scanner.nextInt();
+                System.out.println("enter price:");
+                double retailPricePerDay = scanner.nextDouble();
+                scanner.nextLine();
+                if (vehicle instanceof Car) {
+                    System.out.println("Enter type fuel(electric,oid)");
+                    scanner.nextLine();
+                    String fuelType = scanner.nextLine();
+                    System.out.println("Enter number of Seats:");
+                    int numberOfSeats = scanner.nextInt();
+                    scanner.nextLine();
+
+                } else if (vehicle instanceof Truck) {
+                    System.out.println("Enter distance :");
+                    double distance = scanner.nextDouble();
+                    System.out.println("load capacity:");
+                    double loadCapacity = scanner.nextDouble();
+                }
+
+                System.out.println("update success");
+                return true;
+            }
+        }
+        System.out.println("not found ");
+        return false;
+    }
+
+    public boolean deleteVehicle(String id) {
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (vehicles.get(i).getId().equals(id)) {
+                vehicles.remove(i);
+                System.out.println("delete thanh cong");
+                return true;
+            }
+        }
+        System.out.println("khong thay");
+        return false;
+    }
+
+    public void displayAll() {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.displayDetails();
+        }
+    }
+
+    public Vehicle findVehicleById(String id) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getId().equals(id)) {
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Car> findCarsBySeat(int seats) {
+        ArrayList<Car> carSeat = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Car) {
+                Car car = (Car) vehicle;
+                if (car.getNumberOfSeats() == seats) {
+                    carSeat.add(car);
+                }
+            }
+        }
+        return carSeat;
+    }
+
+    public Truck findTruckLongestDistacnce() {
+        Truck truckDaiNhat = null;
+        double maxDistance = 0.0;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Truck) {
+                Truck truck = (Truck) vehicle;
+                if (truck.getDistance() > maxDistance) {
+                    maxDistance = truck.getDistance();
+                    truckDaiNhat = truck;
+                }
+            }
+        }
+        return truckDaiNhat;
+    }
+
+    public ArrayList<Car> findElectricCar() {
+        ArrayList<Car> carElectric = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Car) {
+                Car car = (Car) vehicle;
+                if ("electric".equalsIgnoreCase(car.getFuelType())) {
+                    carElectric.add(car);
+                }
+            }
+        }
+        return carElectric;
+    }
+}
