@@ -1,0 +1,8 @@
+
+package nguyenngoctu_1322_213;
+
+
+public interface IVehicle {
+   void displayDetails();
+   double calculateRentalCost();
+}
